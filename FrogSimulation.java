@@ -1,15 +1,72 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
 public class FrogSimulation {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+    /** Distance, in inches, from the starting position to the goal. */
+    private int goalDistance;
+
+    /** Maximum number of hops allowed to reach the goal. */
+    private int maxHops;
+
+    /**
+     * Constructs a FrogSimulation where dist is the distance, in inches, from the
+     * starting
+     * position to the goal, and numHops is the maximum number of hops allowed to
+     * reach the goal.
+     * Precondition: dist > 0; numHops > 0
+     */
+
+    public FrogSimulation(int dist, int numHops)
+    {
+        goalDistance = dist;
+        maxHops = numHops;
     }
+
+    /**
+     * Returns an integer representing the distance, in inches, to be moved when the
+     * frog hops.
+     */
+
+    private int hopDistance()
+    {
+        Scanner s = new Scanner(System.in);
+        System.out.println("How far?");
+        return s.nextInt();
+    }
+
+    /**
+     * Simulates a frog attempting to reach the goal as described in part (a).
+     * Returns true if the frog successfully reached or passed the goal during the
+     * simulation;
+     * false otherwise.
+     */
+
+    public boolean simulate()
+    {
+        int hops = 0;
+        int distance = 0;
+        while(hops<maxHops){
+            distance+=hopDistance();
+            if(distance<0) return false;
+            if(distance>=goalDistance) return true;
+            hops++;
+        }
+        return false;
+    }
+
+    /**
+     * Runs num simulations and returns the proportion of simulations in which the
+     * frog
+     * successfully reached or passed the goal.
+     * Precondition: num > 0
+     */
+
+    public double runSimulations(int num)
+    {
+        double successes = 0;
+        for(int i = 0; i < num; i++){
+            if(simulate()) successes++;
+        }
+        return successes / num;
+    }
+
 }
